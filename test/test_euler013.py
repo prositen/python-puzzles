@@ -2,6 +2,8 @@ __author__ = 'anna'
 
 import unittest
 import euler013
+import os
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Euler013Tests(unittest.TestCase):
@@ -18,8 +20,9 @@ class Euler013Tests(unittest.TestCase):
         self.assertEquals(euler013.interesting_solution(n, lines), 2728190129)
 
     def test_euler013_from_file(self):
+        print(basedir)
         n = 100
-        with open("data/euler013.txt", "r") as fh:
+        with open(os.path.join(basedir, "data", "euler013.txt"), "r") as fh:
             lines = fh.readlines()
             self.assertEquals(euler013.interesting_solution(n, lines), 5537376230)
 
