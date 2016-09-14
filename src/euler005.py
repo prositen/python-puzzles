@@ -5,18 +5,9 @@ What is the smallest positive number that is evenly divisible(divisible with no 
 all of the numbers from 1 to N?
 """
 
-from math import sqrt
-from functools import lru_cache
+
 from collections import Counter
-
-
-@lru_cache(maxsize=None)
-def prime_factors(n):
-    for f in range(2, int(sqrt(n) + 1)):
-        d, m = divmod(n, f)
-        if not m:
-            return [f] + prime_factors(d)
-    return [n]
+from util.prime import prime_factors
 
 
 def smallest_multiple(n):
