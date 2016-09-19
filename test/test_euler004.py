@@ -8,9 +8,10 @@ class Euler004Tests(unittest.TestCase):
     def setUp(self):
         pass
 
-    def test_sum_even_fib(self):
-        self.assertEquals(euler004.sum_even_fib(10), 10)
-        self.assertEquals(euler004.sum_even_fib(100), 44)
+    def test_max_palindrome(self):
+        self.assertEquals(euler004.find_palindrome(101110), 101101)
+        self.assertEquals(euler004.find_palindrome(800000), 793397)
+        self.assertEquals(euler004.find_palindrome(793397), 780087)
 
 if __name__ == '__main__':
     unittest.main()
