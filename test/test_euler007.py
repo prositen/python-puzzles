@@ -4,7 +4,7 @@ import unittest
 import euler007
 
 
-class Euler004Tests(unittest.TestCase):
+class Euler007Tests(unittest.TestCase):
     def setUp(self):
         pass
 
