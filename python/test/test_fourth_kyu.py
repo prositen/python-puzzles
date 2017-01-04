@@ -16,3 +16,17 @@ class Test4Kyu(unittest.TestCase):
         ]
         for t in tests:
             self.assertEquals(t['expected'], fourth_kyu.is_interesting(t['n'], t['interesting']))
+
+    def test_random_triplets(self):
+        secret = "whatisup"
+        triplets = [
+            ['t', 'u', 'p'],
+            ['w', 'h', 'i'],
+            ['t', 's', 'u'],
+            ['a', 't', 's'],
+            ['h', 'a', 'p'],
+            ['t', 'i', 's'],
+            ['w', 'h', 's']
+        ]
+
+        self.assertEquals(fourth_kyu.recoverSecret(triplets), secret)
