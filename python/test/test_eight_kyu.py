@@ -1,5 +1,6 @@
 import unittest
-import eight_kyu
+
+from python import eight_kyu
 
 
 class Test8kyu(unittest.TestCase):

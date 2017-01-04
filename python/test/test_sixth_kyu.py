@@ -1,5 +1,5 @@
 import unittest
-import sixth_kyu
+from python import sixth_kyu
 
 
 class Test6Kyu(unittest.TestCase):
