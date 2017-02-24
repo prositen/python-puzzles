@@ -3,4 +3,4 @@ python:
   - "3.3"
   - "3.4"
 script: 
-  - cd python && nosetests
+  - cd python && python3 -m "nose"
