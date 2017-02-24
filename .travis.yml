@@ -1,4 +1,7 @@
 language: python
 python:
   - "3.3"
-script: nosetests
+  - "3.4"
+script: 
+  - cd python
+  - nosetests

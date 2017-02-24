@@ -1,8 +1,8 @@
-__author__ = 'anna'
-
 import unittest
-import euler013
+from project_euler import euler013
 import os
+
+__author__ = 'anna'
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 

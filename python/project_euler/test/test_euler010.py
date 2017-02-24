@@ -1,8 +1,7 @@
-__author__ = 'anna'
-
 import unittest
-import euler010
+from project_euler import euler010
 
+__author__ = 'anna'
 
 class Euler010Tests(unittest.TestCase):
     def setUp(self):

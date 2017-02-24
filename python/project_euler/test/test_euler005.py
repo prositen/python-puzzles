@@ -1,8 +1,8 @@
-__author__ = 'anna'
-
 import unittest
 from collections import Counter
-import euler005
+from project_euler import euler005
+
+__author__ = 'anna'
 
 
 class Euler005tests(unittest.TestCase):
