@@ -1,40 +1,18 @@
 from collections import deque
-from functools import lru_cache
-
 
 class Sudoku(object):
-    class Move(object):
-        def __init__(self, row, col, values):
-            self.row = row
-            self.col = col
-            self.values = values
-
-        def key(self):
-            return "{},{}:{}".format(self.row, self.col, ",".join(str(x) for x in self.values))
-
-        def is_unique(self):
-            return len(self.values) == 1
-
-        def __len__(self):
-            return len(self.values)
-
-        def __repr__(self):
-            return "<Move row={} col={} value={}>".format(self.row, self.col, self.values)
 
     ALL_MOVES = {1, 2, 3, 4, 5, 6, 7, 8, 9}
 
     def __init__(self, state):
         self.state = [[col for col in row] for row in state]
 
-    @lru_cache(maxsize=16)
     def get_row(self, row):
         return [x for x in self.state[row]]
 
-    @lru_cache(maxsize=16)
     def get_col(self, col):
-        return [self.state[row][col] for row in range(9)]
+        return [row[col] for row in self.state]
 
-    @lru_cache(maxsize=16)
     def get_box(self, box):
         col_start = (box % 3) * 3
         row_start = (box // 3) * 3
@@ -42,7 +20,6 @@ class Sudoku(object):
                 for row in range(row_start, row_start + 3)
                 for col in range(col_start, col_start + 3)]
 
-    @lru_cache(maxsize=16)
     def get_box_from_coords(self, row, col):
         col_start = (col // 3) * 3
         row_start = (row // 3) * 3
@@ -56,8 +33,8 @@ class Sudoku(object):
 
     def make_board(self, moves):
         g = Sudoku(self.state)
-        for move in moves:
-            g.state[move.row][move.col] = move.values[0]
+        for row, col, move in moves:
+            g.state[row][col] = move[0]
         return g
 
     def format_board(self):
@@ -79,8 +56,8 @@ class Sudoku(object):
         for row in range(9):
             for col in range(9):
                 if self.state[row][col] == 0:
-                    moves.append(Sudoku.Move(row, col, self.get_moves(row, col)))
-        return sorted(moves, key=lambda x: -len(x))
+                    moves.append((row, col, self.get_moves(row, col)))
+        return sorted(moves, key=lambda x: -len(x[2]))
 
     def is_solved(self):
         """ Board must be valid, and there may be no zeroes """
@@ -109,7 +86,7 @@ class Sudoku(object):
                 return grid
             else:
                 moves = grid.next_moves()
-                unique_moves = list(filter(lambda x: x.is_unique(), moves))
+                unique_moves = list(filter(lambda x: len(x[2]) == 1, moves))
                 if unique_moves:
                     # Set all cells which have only one possible move in one swoop,
                     # to save some iterations.
@@ -124,10 +101,9 @@ class Sudoku(object):
 
                     added = False
                     while moves and not added:
-                        move = moves.pop()
-                        for possible_value in move.values:
-                            possible_move = Sudoku.Move(move.row, move.col, [possible_value])
-                            next_grid = grid.make_board([possible_move])
+                        row, col, move = moves.pop()
+                        for possible_value in move:
+                            next_grid = grid.make_board([(row, col, [possible_value])])
                             if next_grid.key() not in visited:
                                 if next_grid.is_valid():
                                     added = True
