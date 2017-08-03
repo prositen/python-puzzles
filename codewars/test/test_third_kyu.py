@@ -1,6 +1,7 @@
 import unittest
 
 from codewars import third_kyu
+from codewars.third_kyu.vigenere_autokey import VigenereAutokeyCipher
 
 
 class Test3kyu(unittest.TestCase):
@@ -21,5 +22,34 @@ class Test3kyu(unittest.TestCase):
 
         for test in tests:
             result = third_kyu.to_base_64(test[0])
-            self.assertEquals(test[1], result)
-            self.assertEquals(test[0], third_kyu.from_base_64(result))
+            self.assertEqual(test[1], result)
+            self.assertEqual(test[0], third_kyu.from_base_64(result))
+
+    def test_vigenere_autokey_site_example(self):
+        key = 'PASSWORD'
+        abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        c = VigenereAutokeyCipher(key, abc)
+        self.assertEqual('PASSWORDPASSWORDPASSWORD', c.encode('AAAAAAAAPASSWORDAAAAAAAA'))
+        self.assertEqual('AAAAAAAAPASSWORDAAAAAAAA', c.decode('PASSWORDPASSWORDPASSWORD'))
+
+    def test_vigenere_autokey_encode(self):
+        key2 = 'password'
+        abc2 = 'abcdefghijklmnopqrstuvwxyz'
+        c2 = VigenereAutokeyCipher(key2, abc2)
+        self.assertEqual('rovwsoiv', c2.encode('codewars'))
+        self.assertEqual('pmsrebxoy rev lvynmylatcwu dkvzyxi bjbswwaib',
+                         c2.encode('amazingly few discotheques provide jukeboxes'))
+    def test_vigenere_autokey_decode(self):
+        key = 'password'
+        abc = 'abcdefghijklmnopqrstuvwxyz'
+        c = VigenereAutokeyCipher(key, abc)
+
+        self.assertEqual('waffles', c.decode('laxxhsj'))
+        self.assertEqual('amazingly few discotheques provide jukeboxes',
+                         c.decode('pmsrebxoy rev lvynmylatcwu dkvzyxi bjbswwaib'))
+
+    def test_vigenere_autokey_untouched(self):
+        key = 'password'
+        abc = 'abcdefghijklmnopqrstuvxyz'
+        c = VigenereAutokeyCipher(key, abc)
+        self.assertEqual('CODEWARS', c.encode('CODEWARS'))
